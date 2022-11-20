@@ -1,26 +1,29 @@
 <template>
     <section class="py-3">
-        <header class="bg-teal-50 p-2 text-center rounded-lg">
-            <h1 class="text-teal-500 text-xl md:text-2xl font-bold">Data Structure & Algorithm</h1>
+        <header class="bg-white p-2 text-center rounded-lg min-h-[300px] flex flex-col justify-center relative">
+            <h1 class="text-teal-500 text-xl md:text-2xl font-bold">{{info.title}}</h1>
             <div class="my-3 md:max-w-[600px] mx-auto">
-                <p class="text-sm text-slate-500">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci asperiores voluptatum cum quisquam quibusdam commodi dolorum cupiditate! Quas a ex libero repellendus iste? Totam minus quia iusto qui, aperiam illo.</p>
+                <p class="text-sm text-slate-500">{{info.description}}</p>
             </div>
             <div class="pt-2 space-x-3">
                 <span class="text-teal-500 icon">
                     Participants
                     <font-awesome-icon class="text-teal-200" :icon="['fas', 'user']" />
-                    <span class="text-sm">33</span>
+                    <span class="text-sm">{{info.users?info.users.length:0}}</span>
                 </span>
                 <span class="text-teal-500 icon">
                     Messages
                     <font-awesome-icon class="text-teal-200" :icon="['fa', 'comment']" />
-                    <span class="text-sm">109</span>
+                    <span class="text-sm">{{info.messages?info.messages.length:0}}</span>
                 </span>
+            </div>
+            <div>
+                <button class="mt-2 outline-0 border border-teal-400 text-teal-400 rounded px-[10px] py-[4px] hover:bg-teal-400 hover:text-white" @click="joinDiscussion">Join Discussion</button>
             </div>
         </header>
 
         <main class="flex gap-2 mt-5">
-            <div class="flex-none w-[230px] shadow min-h-[300px] p-2 space-y-2">
+            <div class="flex-none w-[180px] md:w-[220px] shadow min-h-[300px] p-2 space-y-2 bg-white">
                 <h2 class="text-teal-500 text-lg font-normal">Participants</h2>
                 <nav>
                     <ul class="space-y-3">
@@ -39,17 +42,17 @@
                     </ul>
                 </nav>
             </div>
-            <div class="grow bg-slate-50 flex flex-col justify-between">
+            <div class="grow bg-white flex flex-col justify-between">
                 <section class="flex flex-col space-y-2 p-2 max-h-[50vh] overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-teal-200">
                     <div class="p-2 rounded bg-teal-50 text-teal-400 max-w-[80%] shadow">
                         <h1 class="text-teal-500 font-medium">Tiana</h1>
                         <p class="text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos asperiores sit reprehenderit laboriosam vitae tempore, saepe architecto in natus quia.</p>
                     </div>
-                    <div class="p-2 rounded bg-white shadow-sm text-teal-400 max-w-[80%] self-end">
+                    <div class="p-2 rounded bg-slate-100 mr-2 shadow-sm text-teal-400 max-w-[80%] self-end border-box">
                         <h1 class="text-teal-500 font-medium">Me</h1>
                         <p class="text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos asperiores sit reprehenderit laboriosam vitae tempore, saepe architecto in natus quia.</p>
                     </div>
-                    <div class="p-2 rounded bg-white shadow-sm text-teal-400 max-w-[80%] self-end">
+                    <div class="p-2 rounded bg-slate-100 mr-2 shadow-sm text-teal-400 max-w-[80%] self-end border-box">
                         <h1 class="text-teal-500 font-medium">Me</h1>
                         <p class="text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos asperiores sit reprehenderit laboriosam vitae tempore, saepe architecto in natus quia.</p>
                     </div>
@@ -57,7 +60,7 @@
                         <h1 class="text-teal-500 font-medium">Tiana</h1>
                         <p class="text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos asperiores sit reprehenderit laboriosam vitae tempore, saepe architecto in natus quia.</p>
                     </div>
-                    <div class="p-2 rounded bg-white shadow-sm text-teal-400 max-w-[80%] self-end">
+                    <div class="p-2 rounded bg-slate-100 mr-2 shadow-sm text-teal-400 max-w-[80%] self-end border-box">
                         <h1 class="text-teal-500 font-medium">Me</h1>
                         <p class="text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos asperiores sit reprehenderit laboriosam vitae tempore, saepe architecto in natus quia.</p>
                     </div>
@@ -74,8 +77,13 @@
 export default {
     data() {
         return {
+            info: {},
             message: ''
         }
+    },
+    mounted() {
+        this.info = this.$store.state.forums.data.find(each => each._id == this.$route.params.forum)
+        console.log(this.info)
     },
     watch: {
         message(newV, oldV) {
@@ -85,6 +93,11 @@ export default {
             }else {
                 msg.style.overflowY = 'scroll'
             }
+        }
+    },
+    methods: {
+        async joinDiscussion() {
+            const resp = await this.$axios.$post('/forums/join', {forum: this.$route.params.forum, user})
         }
     }
 }

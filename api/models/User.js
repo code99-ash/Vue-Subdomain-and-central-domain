@@ -12,5 +12,5 @@ const UserSchema = new mongoose.Schema({
     },
 })
 
-const User = mongoose.model('User', UserSchema);
-export default { User }
+const User = mongoose.model('User', UserSchema, null, { overwriteModels: true });
+export default User

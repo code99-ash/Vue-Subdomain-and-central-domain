@@ -25,7 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '~plugins/vue-draggable', ssr: false}
+    {src: '@/plugins/toast-service', ssr: false},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -47,15 +47,21 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
+    '@nuxtjs/auth-next',
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    'primevue/nuxt',
   ],
+  primevue: {
+    theme: 'md-light-indigo',
+    ripple: true,
+    components: ['InputText','Button','DataTable', 'Dialog'],
+    directives: ['Tooltip']
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: `${process.env.baseURL}/api` || 'http://localhost:3000/api'
+    baseURL: 'http://localhost:3000/api'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -67,11 +73,42 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extractCSS: true,
+    transpile: [ /primevue/ ],
+    extend(config, ctx) { },
     postcss: {
       plugins: {
         tailwindcss: {},
         autoprefixer: {},
       },
     },
+  },
+
+  auth: {
+    strategies: {
+      local: {
+//      scheme: "refresh",
+        token: {
+          property: "token",
+          global: true,
+          required: true,
+          type: "Bearer"
+        },
+        user: {
+          property: "user",
+          autoFetch: true
+        },
+//      refreshToken: {  // it sends request automatically when the access token expires, and its expire time has set on the Back-end and does not need to we set it here, because is useless
+//        property: "refresh_token", // property name that the Back-end sends for you as a refresh token for saving on localStorage and cookie of user browser
+//        data: "refresh_token", // data can be used to set the name of the property you want to send in the request.
+//      },
+        endpoints: {
+          login: { url: "/auth/login", method: "post" },
+//        refresh: { url: "/auth/refresh-token", method: "post" },
+          logout: false, //  we don't have an endpoint for our logout in our API and we just remove the token from localstorage
+          user: { url: "/auth/user", method: "get" }
+        }
+      }
+    }
   }
 }

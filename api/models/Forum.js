@@ -18,12 +18,10 @@ const ForumSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     }],
-    messages: [
-        {
-            type: MsgSchema, required: true
-        }
-    ]
+    messages: [{
+        type: MsgSchema, required: true
+    }]
 }, { timestamps: true })
 
-const Forum = mongoose.model('Forum', ForumSchema);
-export default { Forum }
+const Forum = mongoose.model('Forum', ForumSchema,null, { overwriteModels: true })
+export default Forum

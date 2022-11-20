@@ -1,13 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
+import forumCtrl from './controllers/ForumController';
+import AuthCtrl from './controllers/AuthController';
 import {newMessage} from './controllers/ChatsCtrl.js'
-import ssRo from './routes'
 
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-app.use('/', ssRo.router)
+
 app.get('/message', (...params) => newMessage(...params))
+
+app.get('/forums', (...params) => forumCtrl.getForums(...params))
+app.post('/forums/join', (...params) => forumCtrl.joinForum(...params))
+
+app.post('/auth/login', (...params) => AuthCtrl.login(...params))
+app.post('/auth/register', (...params) => AuthCtrl.register(...params))
+app.post('/auth/user', (...params) => AuthCtrl.user(...params))
 
 mongoose.connect(
     process.env.DB_CONNECT, 
