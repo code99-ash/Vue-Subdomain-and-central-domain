@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container {
+    @apply  max-w-[1200px] mx-auto;
+}
+
+.btn {
+    @pply outline-0 px-[10px] py-[4px];
+}
+
+.tw-card {
+    @apply  bg-[#fff] p-3 shadow rounded dark:bg-slate-600;
+}

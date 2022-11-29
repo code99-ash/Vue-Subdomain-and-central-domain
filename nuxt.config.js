@@ -1,4 +1,5 @@
 export default {
+  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Forum App',
@@ -51,11 +52,20 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'primevue/nuxt',
+    'cookie-universal-nuxt',
   ],
   primevue: {
     theme: 'md-light-indigo',
     ripple: true,
-    components: ['InputText','Button','DataTable', 'Dialog'],
+    components: [
+      'InputText',
+      'Button',
+      'DataTable', 
+      'Dialog',
+      'Carousel',
+      'TabView',
+      'TabPanel'
+    ],
     directives: ['Tooltip']
   },
 

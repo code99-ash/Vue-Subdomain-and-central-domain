@@ -20,6 +20,7 @@ export default {
         handleError(err) {
             const resp = err.message
             var feedback;
+            console.log(err.response)
 
             if(resp=='Network Error') {
                 feedback = 'There is an internet connection problem'
