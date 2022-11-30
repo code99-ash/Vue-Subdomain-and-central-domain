@@ -30,7 +30,6 @@ export default {
   buildModules: [
     '@nuxtjs/dotenv',
     '@nuxt/postcss8',
-    '@nuxtjs/fontawesome',
     ['@nuxtjs/router', { keepDefaultRouter: true }]
   ],
 
