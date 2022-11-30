@@ -44,7 +44,6 @@ export default {
   modules: [
     '@nuxtjs/auth-next',
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     'primevue/nuxt',
     'cookie-universal-nuxt',
   ],
@@ -67,8 +66,6 @@ export default {
   axios: {
     baseURL: 'http://tenancy.test'
   },
-
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
