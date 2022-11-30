@@ -1,5 +1,4 @@
 export default {
-  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Forum App',
@@ -19,11 +18,6 @@ export default {
   css: [
     '@/assets/main.css',
   ],
-
-  serverMiddleware: {
-    '/api': '~/api'
-  },
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {src: '@/plugins/toast-service', ssr: false},
@@ -37,6 +31,7 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxt/postcss8',
     '@nuxtjs/fontawesome',
+    ['@nuxtjs/router', { keepDefaultRouter: true }]
   ],
 
   fontawesome: {
@@ -71,7 +66,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:3000/api'
+    baseURL: 'http://tenancy.test'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -113,7 +108,7 @@ export default {
 //        data: "refresh_token", // data can be used to set the name of the property you want to send in the request.
 //      },
         endpoints: {
-          login: { url: "/auth/login", method: "post" },
+          login: { url: "http://tenancy.test/login", method: "post" },
 //        refresh: { url: "/auth/refresh-token", method: "post" },
           logout: false, //  we don't have an endpoint for our logout in our API and we just remove the token from localstorage
           user: { url: "/auth/user", method: "get" }
